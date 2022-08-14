@@ -78,6 +78,8 @@ namespace Chapter03
         [DataRow("23")]
         public void ExceptionTest(string? ageString)
         {
+            string s = nameof(ageString);
+
             try
             {
                 var age = IntConvertor(ageString);
@@ -89,7 +91,7 @@ namespace Chapter03
             }
             
         }
-        private int? IntConvertor(string age)
+        private static int? IntConvertor(string age)
         {
             if(int.TryParse(age, out int ageInt))
             {
@@ -100,5 +102,24 @@ namespace Chapter03
                 throw new Exception($"{age} is not a number");
             }
         }
+        [TestMethod]
+        [DataRow(1,0)]
+        [DataRow(2,1)]
+        [DataRow(3,1)]
+        [DataRow(4,2)]
+        [DataRow(5,3)]
+        [DataRow(6,5)]
+        [DataRow(7,8)]
+        public void FibTest(int fibValue, int fibResult)
+        {
+            Assert.AreEqual(Fib(fibValue), fibResult);
+        }
+        private static int Fib(int a) => a switch
+        {
+            1 => 0,
+            2 => 1,
+            _ => Fib(a - 1) + Fib(a - 2)
+
+        };
     }
 }
